@@ -1,0 +1,12 @@
+div{
+    margin: auto;
+    width: 50%;
+    /* text-align: center; */
+    background-color: rgb(223, 130, 130);
+    color: rgb(101, 3, 3);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+}
