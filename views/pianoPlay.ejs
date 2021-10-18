@@ -310,6 +310,21 @@
       myCircle.fillColor = color;
       circles.push(myCircle);  
   }
+  function onMouseUp(event){
+    //l=Object.keys(keyData).length;
+    l=sounds.length;
+    a=Math.floor(Math.random()*l);
+    //console.log(a)
+    //keyData.sounds[0].play();
+    sounds[a].play();
+
+    h=view.size.height
+    w =view.size.width
+    color=randomColor();
+    myCircle=new Path.Circle(event.point,300);//Math.random()*maxRadius);
+    myCircle.fillColor = color;
+    circles.push(myCircle);  
+}
 
     function onFrame(event){
         for(var i=0;i<circles.length;i++)
