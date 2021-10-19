@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Circles N Sounds</title>
-	<link rel="stylesheet" type="text/css" href="/css/circles.css">
-    <script type="text/javascript" src="/js/lib/paper-full.js"></script>
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script> -->
-    <script type="text/javascript" src="/js/lib/howler.js"></script>
 
-    <script type="text/paperscript" canvas="myCanvas">
+<head>
+  <title>Circles N Sounds</title>
+  <link rel="stylesheet" type="text/css" href="/css/circles.css">
+  <script type="text/javascript" src="/js/lib/paper-full.js"></script>
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script> -->
+  <script type="text/javascript" src="/js/lib/howler.js"></script>
+
+  <script type="text/paperscript" canvas="myCanvas">
       var sounds=[
           
            new Howl({
@@ -279,9 +280,18 @@
     var w;
     var myCircle;
     var circles=[];
+    var text = new PointText({
+      point: view.center,
+      justification: 'center',
+      fontSize: 25,
+      fillColor: '#ee6c4d'
+    });
+    var firstTrial = false;
 
+  
 
     function onKeyDown(event) {
+      firstTrial = true;
               
               if(keyData[event.key]){
                   keyData[event.key].sound.play();  
@@ -289,6 +299,7 @@
             
             h=view.size.height
             w =view.size.width
+            //console.log(h,w)
             color=randomColor();
             myCircle=new Path.Circle(new Point(Math.random()*w,Math.random()*h),300);//Math.random()*maxRadius);
             myCircle.fillColor = color;
@@ -296,6 +307,7 @@
     }
 
     function onMouseDown(event){
+      firstTrial = true;
       //l=Object.keys(keyData).length;
       l=sounds.length;
       a=Math.floor(Math.random()*l);
@@ -310,25 +322,17 @@
       myCircle.fillColor = color;
       circles.push(myCircle);  
   }
-  function onMouseUp(event){
-    //l=Object.keys(keyData).length;
-    l=sounds.length;
-    a=Math.floor(Math.random()*l);
-    //console.log(a)
-    //keyData.sounds[0].play();
-    sounds[a].play();
-
-    h=view.size.height
-    w =view.size.width
-    color=randomColor();
-    myCircle=new Path.Circle(event.point,300);//Math.random()*maxRadius);
-    myCircle.fillColor = color;
-    circles.push(myCircle);  
-}
 
     function onFrame(event){
+      if(!circles.length && !firstTrial){
+        text.content = 'Touch your screen OR Tap on your keyboard';
+      }
+      if(!circles.length && firstTrial){
+        text.content = 'Keep Playing ♪ ♫ ♪ ♫♫';
+      }
         for(var i=0;i<circles.length;i++)
         {
+          text.content = '';
           circles[i].fillColor.hue+=1;
           circles[i].scale(0.9);
               if(circles[i].bounds.height<0.001){
@@ -350,9 +354,21 @@
 
         return 'rgba('+a+', '+b+', '+c+', '+t+')';
     }
+
+    
 </script>
+
 </head>
+
 <body>
-<canvas id="myCanvas" resize></canvas>
+  <canvas id="myCanvas" resize>
+  </canvas>
+  <!-- <script>
+  var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.font = "30px Arial";
+ctx.fillText("Hello World", 10, 50);
+</script> -->
 </body>
+
 </html>
